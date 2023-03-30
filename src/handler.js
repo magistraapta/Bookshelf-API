@@ -7,6 +7,23 @@ const addBooks = (request, h) => {
   const createdAt = new Date().toISOString();
   const updatedAt = createdAt;
 
+  if (name === undefined) {
+    const response = h.response({
+      status: 'fail',
+      message: 'Gagal menambahkan buku. Mohon isi nama buku',
+    });
+
+    response.code(400);
+    return response;
+  }else if (readPage > pageCount) {
+    const response = h.response({
+      status: 'fail',
+      message: 'Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount',
+    });
+    response.code(400);
+    return response;
+  }
+
   const newBooks = {
     id,
     createdAt,
@@ -23,7 +40,7 @@ const addBooks = (request, h) => {
   if (isSuccess) {
     const response = h.response({
       status: 'success',
-      message: 'data berhasil ditambahkan',
+      message: 'Buku berhasil ditambahkan',
       data: {
         bookId: id,
       },
@@ -33,24 +50,7 @@ const addBooks = (request, h) => {
     return response;
   }
 
-  if (!name) {
-    const response = h.response({
-      status: 'fail',
-      message: 'data gagal ditambahkan, mohon isi header',
-    });
-
-    response.code(400);
-    return response;
-  }
-
-  if (readPage > pageCount) {
-    const response = h.response({
-      status: 'fail',
-      message: 'Gagal menambahkan buku, readPage tidak boleh lebih besar dari pageCount',
-    });
-    response.code(400);
-    return response;
-  }
+  
 };
 
 module.exports = { addBooks };
