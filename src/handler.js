@@ -165,8 +165,8 @@ const editBook = (request, h) => {
 };
 
 const deleteBook = (request, h) => {
-  const { id } = request.params;
-  const index = books.filter((b) => b.id === id);
+  const { bookId } = request.params;
+  const index = books.filter((b) => b.id === bookId);
 
   if (index.length === 1) {
     books.splice(index, 1);
